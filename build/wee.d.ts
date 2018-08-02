@@ -5,9 +5,11 @@ declare module wee {
 }
 declare module wee.tests {
     class CharacterStreamTest {
-        test(): void;
+        testStuff(): void;
     }
 }
 declare module wee.tests {
-    function runTests(weeTests: any): void;
+    function assert(condition: boolean, message?: string): void;
+    function log(message: string, isError?: boolean): void;
+    function runTests(tests: any): void;
 }

@@ -1,7 +1,8 @@
 module wee.tests {
 	export class CharacterStreamTest {
-		test() {
-			new CharacterStream().foo();
+		testStuff() {
+			log("Hello world");
+			assert(false, "Oh no, assert failed.");
 		}
 	}
 }
