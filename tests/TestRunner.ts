@@ -1,3 +1,4 @@
+/// <reference path="TokenizerTest.ts" />
 module wee.tests {
 	export function assert(condition: boolean, message = "") {
 		if (!condition) throw new Error(message);

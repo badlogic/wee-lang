@@ -211,6 +211,96 @@ var wee;
 })(wee || (wee = {}));
 var wee;
 (function (wee) {
+    var TokenType = (function () {
+        function TokenType(literal, error) {
+            this.literal = literal;
+            this.error = error;
+        }
+        TokenType.getSortedTypes = function () {
+            if (TokenType.values.length == 0) {
+                var names = Object.getOwnPropertyNames(TokenType);
+                for (var i = 0; i < names.length; i++) {
+                    var property = TokenType[names[i]];
+                    if (property.constructor.name == "TokenType") {
+                        if (property.error != undefined)
+                            TokenType.values.push(property);
+                    }
+                }
+                TokenType.values = TokenType.values.sort(function (a, b) {
+                    if (a.literal == null && b.literal == null)
+                        return 0;
+                    if (a.literal == null && b.literal != null)
+                        return 1;
+                    if (a.literal != null && b.literal == null)
+                        return -1;
+                    if (a.literal != null && b.literal != null) {
+                        return a.literal.length - b.literal.length;
+                    }
+                    return 0;
+                });
+            }
+            return TokenType.values;
+        };
+        TokenType.Period = new TokenType(".", ".");
+        TokenType.Comma = new TokenType(",", ",");
+        TokenType.Semicolon = new TokenType(";", ";");
+        TokenType.Colon = new TokenType(":", ":");
+        TokenType.Plus = new TokenType("+", "+");
+        TokenType.Minus = new TokenType("-", "-");
+        TokenType.Asterisk = new TokenType("*", "*");
+        TokenType.ForwardSlash = new TokenType("/", "/");
+        TokenType.Percentage = new TokenType("%", "%");
+        TokenType.Exponent = new TokenType("^", "^");
+        TokenType.Less = new TokenType("<", "<");
+        TokenType.Greater = new TokenType(">", ">");
+        TokenType.LessEqual = new TokenType("<=", "<=");
+        TokenType.GreaterEqual = new TokenType(">=", ">=");
+        TokenType.Equal = new TokenType("==", "==");
+        TokenType.NotEqual = new TokenType("!=", "!=");
+        TokenType.Assignment = new TokenType("=", "=");
+        TokenType.Not = new TokenType("not", "not");
+        TokenType.And = new TokenType("and", "and");
+        TokenType.Or = new TokenType("or", "or");
+        TokenType.Xor = new TokenType("xor", "xor");
+        TokenType.Shl = new TokenType("shl", "shl");
+        TokenType.Shr = new TokenType("shr", "shr");
+        TokenType.Ushr = new TokenType("ushr", "ushr");
+        TokenType.Pipe = new TokenType("|", "|");
+        TokenType.LeftParantheses = new TokenType("(", ")");
+        TokenType.RightParantheses = new TokenType(")", ")");
+        TokenType.LeftBracket = new TokenType("[", "[");
+        TokenType.RightBracket = new TokenType("]", "]");
+        TokenType.LeftCurly = new TokenType("{", "{");
+        TokenType.RightCurly = new TokenType("{", "}");
+        TokenType.Questionmark = new TokenType("?", "?");
+        TokenType.DoubleQuote = new TokenType("\"", "\"");
+        TokenType.BooleanLiteral = new TokenType(null, "true or false");
+        TokenType.DoubleLiteral = new TokenType(null, "a double floating point number");
+        TokenType.FloatLiteral = new TokenType(null, "a floating point number");
+        TokenType.LongLiteral = new TokenType(null, "a long integer number");
+        TokenType.IntegerLiteral = new TokenType(null, "an integer number");
+        TokenType.ShortLiteral = new TokenType(null, "a short integer number");
+        TokenType.ByteLiteral = new TokenType(null, "a byte integer number");
+        TokenType.CharacterLiteral = new TokenType(null, "a character");
+        TokenType.StringLiteral = new TokenType(null, "a string");
+        TokenType.NothingLiteral = new TokenType(null, "null");
+        TokenType.Identifier = new TokenType(null, "an identifier");
+        TokenType.values = [];
+        return TokenType;
+    }());
+    wee.TokenType = TokenType;
+    var Token = (function () {
+        function Token(type, span) {
+            this.type = type;
+            this.span = span;
+            this.text = span.text;
+        }
+        return Token;
+    }());
+    wee.Token = Token;
+})(wee || (wee = {}));
+var wee;
+(function (wee) {
     var tests;
     (function (tests) {
         var CharacterStreamTest = (function () {
@@ -231,6 +321,21 @@ var wee;
             return CharacterStreamTest;
         }());
         tests.CharacterStreamTest = CharacterStreamTest;
+    })(tests = wee.tests || (wee.tests = {}));
+})(wee || (wee = {}));
+var wee;
+(function (wee) {
+    var tests;
+    (function (tests) {
+        var TokenizerTest = (function () {
+            function TokenizerTest() {
+            }
+            TokenizerTest.prototype.testSortedTokenTypes = function () {
+                var types = wee.TokenType.getSortedTypes();
+            };
+            return TokenizerTest;
+        }());
+        tests.TokenizerTest = TokenizerTest;
     })(tests = wee.tests || (wee.tests = {}));
 })(wee || (wee = {}));
 var wee;
