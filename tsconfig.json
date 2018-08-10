@@ -6,7 +6,8 @@
 		"preserveConstEnums": true,
 		"outFile": "build/wee.js",
 		"sourceMap": true,
-		"declaration": true
+		"declaration": true,
+		"strict": true
 	},
 	"include": [
 		"src/**/*",
